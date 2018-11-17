@@ -19,6 +19,8 @@ import java.util.List;
 
 public class JetpackDemoFragment extends Fragment {
 
+    private static final int NUM_PLANTS_TO_QUERY = 3;
+
     private TextView plantLabel;
 
     private final Observer<PlantData> plantObserver = new Observer<PlantData>() {
@@ -48,9 +50,9 @@ public class JetpackDemoFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         JetpackDemoViewModel viewModel = ViewModelProviders.of(this).get(JetpackDemoViewModel.class);
-        LiveDataUtils.reObserve(viewModel.getPlantData(), this, plantObserver);
+        viewModel.getPlantData().observe(this, plantObserver);
 
-        viewModel.setLimitForQuery(3);
+        viewModel.setLimitForQuery(NUM_PLANTS_TO_QUERY);
     }
 
     private void setPlantLabel(@NonNull List<Plant> plants) {
@@ -60,6 +62,7 @@ public class JetpackDemoFragment extends Fragment {
             result.append(plant.genus).append(", ");
         }
 
+        // remove extra comma and space
         plantLabel.setText(result.substring(0, result.length() - 2));
     }
 }

@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
+import com.example.jason.jetpackdemo.ResubscribableMutableLiveData;
 import com.example.jason.jetpackdemo.model.PlantData;
 import com.example.jason.jetpackdemo.network.JetpackAPI;
 import com.example.jason.jetpackdemo.network.PlantListService;
@@ -17,7 +18,7 @@ public class JetpackDemoRepository extends DisposableSingleObserver<PlantData> {
     private static final String QUERY_FIELDS = "Genus";
 
     @NonNull
-    private final MutableLiveData<PlantData> result = new MutableLiveData<>();
+    private final MutableLiveData<PlantData> result = new ResubscribableMutableLiveData<>();
 
     private PlantListService service = JetpackAPI.getClient().create(PlantListService.class);
 
